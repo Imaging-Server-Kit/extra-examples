@@ -1,0 +1,7 @@
+imaging-server-kit
+torch
+torchvision
+Pillow
+hydra-core
+huggingface-hub
+git+https://github.com/facebookresearch/sam2.git

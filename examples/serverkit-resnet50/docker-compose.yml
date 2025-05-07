@@ -1,0 +1,6 @@
+services:
+  resnet50:
+    build:
+      context: .
+    ports:
+      - "8000:8000"

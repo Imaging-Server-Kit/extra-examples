@@ -1,0 +1,13 @@
+project_slug: "instanseg"
+project_url: "https://github.com/instanseg/instanseg/"
+serverkit_repo_url: "https://github.com/Imaging-Server-Kit/serverkit-instanseg"
+project_name: "InstanSeg"
+description: "A pytorch-based cell and nucleus segmentation pipeline for fluorescence and brightfield microscopy images."
+used_for:
+  - "Segmentation"
+tags:
+  - "Deep learning"
+  - "Fluorescence microscopy"
+  - "H&E"
+  - "Digital pathology"
+  - "Cell biology"
