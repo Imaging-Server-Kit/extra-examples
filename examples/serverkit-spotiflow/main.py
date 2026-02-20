@@ -74,7 +74,7 @@ def spotiflow_algo(
             "intensities": intensities,
         }
 
-        return sk.Points(points, meta=points_meta)
+        return sk.Points(points, **points_meta)
 
     # Multi-channel 2D case (CYX order): we predict all channels independently and aggregate the results
     elif image.ndim == 3:
@@ -107,7 +107,7 @@ def spotiflow_algo(
             "intensities": all_intensities,
         }
 
-        return sk.Points(all_points, meta=points_meta)
+        return sk.Points(all_points, **points_meta)
 
 
 if __name__ == "__main__":

@@ -29,7 +29,7 @@ def get_sample():
             name="Basis", items=["B1", "B2", "B3"], default="B3", auto_call=True
         ),
     },
-    samples=[{"mask": get_sample()}]
+    samples=[{"mask": get_sample()}],
 )
 def splinebox_algo(mask: sk.Mask, M, basis):
     contours = skimage.measure.find_contours(mask)
@@ -54,16 +54,16 @@ def splinebox_algo(mask: sk.Mask, M, basis):
         yield [
             sk.Paths(
                 splinebox_vals,
-                meta={
-                    "face_color": "transparent",
-                    "edge_color": "blue",
-                    "edge_width": 1,
-                },
+                face_color="transparent",
+                edge_color="blue",
+                edge_width=1,
             ),
             sk.Points(
                 control_points[1:],
                 name="Control points",
-                meta={"size": 2, "face_color": "blue", "border_width": 0},
+                size=2,
+                face_color="blue",
+                border_width=0,
             ),
         ]
 

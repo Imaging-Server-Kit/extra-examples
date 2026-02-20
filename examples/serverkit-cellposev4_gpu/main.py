@@ -103,7 +103,7 @@ def cellpose_server(
         cellprob_threshold=cellprob_threshold,
     )
 
-    return sk.Mask(segmentation, name="Cellpose result")
+    return sk.Mask(segmentation, name="Cellpose result", merger="instances")
 
 
 if __name__ == "__main__":

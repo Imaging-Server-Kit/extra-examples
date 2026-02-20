@@ -31,6 +31,7 @@ class VideoCamera:
         "webcam_idx": sk.Integer(name="Webcam index", min=0),
         "filter": sk.Choice(name="Filter", items=["sobel", "threshold", "none"], default="none")
     },
+    tileable=False,
 )
 def stream_webcam(webcam_idx, filter):
     camera = VideoCamera(webcam_idx)
@@ -40,13 +41,13 @@ def stream_webcam(webcam_idx, filter):
         if filter == "sobel":
             frame = frame[..., 1]
             frame = sobel(frame)
-            yield sk.Image(frame, name="Webcam stream (filtered)")
+            yield sk.Image(frame, name="Webcam stream (filtered)", merger="override")
         elif filter == "threshold":
             frame = frame[..., 1]
             binary = frame > threshold_otsu(frame)
-            yield sk.Image(frame, name="Webcam stream (gray)"), sk.Mask(binary, name="Webcam stream (segmented)")
+            yield sk.Image(frame, name="Webcam stream (gray)", merger="override"), sk.Mask(binary, name="Webcam stream (segmented)")
         else:
-            yield sk.Image(frame, name="Webcam stream")
+            yield sk.Image(frame, name="Webcam stream", merger="override", rgb=True)
         
 
 if __name__ == "__main__":

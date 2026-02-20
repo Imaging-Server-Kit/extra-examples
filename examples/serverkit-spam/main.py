@@ -38,18 +38,11 @@ def spam_reg_algo(fixed_image, moving_image):
 
     disp_y = np.ones_like(fixed_image) * dy
     disp_x = np.ones_like(fixed_image) * dx
-    # err_img = np.ones_like(fixed_image) * error
 
     ry, rx = fixed_image.shape
     src_pt = np.array([[ry / 2, rx / 2]])
     disp = np.array([[dy, dx]])
     vectors = np.stack((src_pt, disp), axis=1)
-
-    vectors_meta = {
-        "vector_style": "arrow",
-        "features": {"error": error},
-        "edge_color": "blue",
-    }
 
     registered_image = spam.DIC.applyPhiPython(moving_image, Phi)
 
@@ -57,12 +50,20 @@ def spam_reg_algo(fixed_image, moving_image):
         sk.Image(
             registered_image,
             name="Registered",
-            meta={"contrast_limits": [float(registered_image.min()), float(registered_image.max())]},
+            contrast_limits=[
+                float(registered_image.min()),
+                float(registered_image.max()),
+            ],
         ),
-        sk.Image(disp_y, name="Dy", meta={"colormap": "viridis"}),
-        sk.Image(disp_x, name="Dx", meta={"colormap": "viridis"}),
-        # sk.Image(err_img, name="Error", meta={"colormap": "viridis"}),
-        sk.Vectors(vectors, name="Displacements", meta=vectors_meta),
+        sk.Image(disp_y, name="Dy", colormap="viridis"),
+        sk.Image(disp_x, name="Dx", colormap="viridis"),
+        sk.Vectors(
+            vectors,
+            name="Displacements",
+            vector_style="arrow",
+            features={"error": error},
+            edge_color="blue",
+        ),
     )
 
 

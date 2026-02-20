@@ -64,7 +64,7 @@ def orientationpy_algo(
     gradient_mode: str,
 ):
     if image.size == 0:
-        return sk.Notification("Image has size zero", meta={"level": "warning"})
+        return sk.Notification("Image has size zero", level="warning")
 
     if image.ndim == 2:
         mode = "fiber"  # no membranes in 2D
@@ -122,23 +122,13 @@ def orientationpy_algo(
 
     edge_colors = np.stack((reds, greens, blues, alphas)).T
 
-    meta = {
-        "edge_width": np.max(node_spacings) / 3.0,
-        "opacity": 1.0,
-        "ndim": image.ndim,
-        "vector_style": "line",
-        "edge_color": edge_colors,
-    }
-
     if with_intensity:
         intensity = orientationpy.computeIntensity(structureTensor)
         yield sk.Image(
             intensity,
             name="Intensity",
-            meta={
-                "colormap": "viridis",
-                "contrast_limits": [np.min(intensity), np.max(intensity)],
-            },
+            colormap="viridis",
+            contrast_limits=[np.min(intensity), np.max(intensity)],
         )
 
     if with_directionality:
@@ -146,20 +136,20 @@ def orientationpy_algo(
         yield sk.Image(
             directionality,
             name="Directionality",
-            meta={
-                "colormap": "viridis",
-                "contrast_limits": [np.min(directionality), np.max(directionality)],
-            },
+            colormap="viridis",
+            contrast_limits=[np.min(directionality), np.max(directionality)],
         )
+        
+    vectors_meta = {
+        "edge_width": np.max(node_spacings) / 3.0,
+        "opacity": 1.0,
+        "ndim": image.ndim,
+        "vector_style": "line",
+        "edge_color": edge_colors,
+    }
 
-    return sk.Vectors(vectors, name="Orientation vectors", meta=meta)
+    return sk.Vectors(vectors, name="Orientation vectors", **vectors_meta)
 
 
 if __name__ == "__main__":
-    ## Usage as server:
     sk.serve(orientationpy_algo)
-    
-    ## Direct usage in Napari:
-    # import napari
-    # sk.to_napari(orientationpy_algo)
-    # napari.run()

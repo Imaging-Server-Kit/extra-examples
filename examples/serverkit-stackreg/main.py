@@ -58,10 +58,8 @@ def stackreg_algo(
     return sk.Image(
         registered_stack,
         name="Registered stack",
-        meta={
-            "colormap": "viridis",
-            "contrast_limits": [registered_stack.min(), registered_stack.max()],
-        },
+        colormap="viridis",
+        contrast_limits=[registered_stack.min(), registered_stack.max()],
     )
 
 

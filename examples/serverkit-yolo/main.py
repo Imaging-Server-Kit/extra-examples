@@ -71,14 +71,14 @@ def yolo_detect_algo(
         device=device,
     )
 
-    probabilities = results[0].boxes.conf.cpu().numpy()
+    probabilities = results[0].boxes.conf.cpu().numpy().tolist()
     n_detections = len(probabilities)
     if n_detections == 0:
         return sk.Notification("No detections.")
 
     boxes, classes_indeces = postprocess_results(results)
     classes = [str(model.names.get(class_index)) for class_index in classes_indeces]
-    unique_classes = np.unique(np.array(classes))
+    unique_classes = np.unique(np.array(classes)).tolist()
 
     boxes_params = {
         "name": "YOLO detections",
@@ -92,7 +92,7 @@ def yolo_detect_algo(
         },
     }
 
-    return sk.Boxes(boxes, meta=boxes_params), sk.String(f"Detections: {n_detections} (Classes: {unique_classes})")
+    return sk.Boxes(boxes, **boxes_params), sk.String(f"Detections: {n_detections} (Classes: {unique_classes})")
 
 
 if __name__ == "__main__":

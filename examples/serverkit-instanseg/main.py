@@ -33,7 +33,7 @@ def instanseg_algo(image, model_name, pixel_size):
 
     if model_name != "fluorescence_nuclei_and_cells":
         mask = np.squeeze(mask)
-
+        
     return sk.Mask(mask, name=f"InstanSeg ({model_name})")
 
 

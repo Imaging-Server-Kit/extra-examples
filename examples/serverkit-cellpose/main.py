@@ -3,7 +3,6 @@ import numpy as np
 from cellpose import models
 import imaging_server_kit as sk
 
-
 @sk.algorithm(
     name="CellPose",
     parameters={
@@ -77,8 +76,9 @@ def cellpose_algo(
         flow_threshold=flow_threshold,
         cellprob_threshold=cellprob_threshold,
         channels=[0, 0],  # Grayscale image only (for now)
+        # do_3D=True,
     )
-    return sk.Mask(segmentation, name="CellPose result")
+    return sk.Mask(segmentation, name="CellPose result (instances)", merger="instances")
 
 
 if __name__ == "__main__":

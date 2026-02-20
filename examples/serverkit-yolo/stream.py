@@ -45,7 +45,7 @@ def yolo_detect_live(
     while True:
         frame = camera.get_frame()
 
-        results = model(source=frame, device=device)
+        results = model(source=frame, device=device, verbose=False)
 
         probabilities = results[0].boxes.conf.cpu().numpy()
         n_detections = len(probabilities)
@@ -74,7 +74,7 @@ def yolo_detect_live(
         # When serving, adding a little delay can help to stabilize the frame rate (TODO: investigate)
         time.sleep(0.1)
 
-        yield sk.Image(frame, name="Camera stream", meta={"contrast_limits": [0, 255]}), sk.Boxes(boxes, meta=boxes_params)
+        yield sk.Image(frame, name="Camera stream", contrast_limits=[0, 255], merger="override", rgb=True), sk.Boxes(boxes, **boxes_params)
 
 
 if __name__ == "__main__":

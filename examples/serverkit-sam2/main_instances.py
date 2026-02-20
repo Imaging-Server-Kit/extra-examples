@@ -20,7 +20,7 @@ generator = SAM2AutomaticMaskGenerator.from_pretrained(
 
 @sk.algorithm(
     parameters={
-        "image": sk.Image(description="Input image (2D, RGB).", dimensionality=[2, 3], rgb=True),
+        "image": sk.Image(description="Input image (2D, RGB).", dimensionality=[2, 3]),
         "boxes": sk.Boxes(
             name="Boxes",
             description="Boxes prompt.",
@@ -81,15 +81,17 @@ def sam2_algo(image, boxes, points, auto_mode):
         # Run the model
         with torch.inference_mode(), torch.autocast(DEVICE, dtype=torch.bfloat16):
             predictor.set_image(image)
-            masks, _, _ = predictor.predict(
-                point_coords=points,
-                point_labels=point_labels,
-                box=boxes,
-                multimask_output=False,
-            )
-
-        for k, m in enumerate(masks):
-            mask[np.squeeze(m) == 1] = k + 1
+            
+            for point_idx, point in enumerate(points):
+                masks, _, _ = predictor.predict(
+                    point_coords=point[None],
+                    point_labels=np.ones(1),
+                    box=boxes,
+                    multimask_output=False,
+                )
+                if len(masks) > 0:
+                    first_mask = masks[0]
+                    mask[np.squeeze(first_mask) == 1] = point_idx + 1
 
     return sk.Mask(mask, name="SAM-2 result", merger="instances")
 
