@@ -1,7 +1,6 @@
 from pathlib import Path
 import numpy as np
 import pandas as pd
-from skimage.color import gray2rgb
 from skimage.exposure import rescale_intensity
 import torch
 from sam2.sam2_image_predictor import SAM2ImagePredictor
@@ -20,17 +19,9 @@ generator = SAM2AutomaticMaskGenerator.from_pretrained(
 
 @sk.algorithm(
     parameters={
-        "image": sk.Image(description="Input image (2D, RGB).", dimensionality=[2, 3], rgb=True),
-        "boxes": sk.Boxes(
-            name="Boxes",
-            description="Boxes prompt.",
-            required=False,
-        ),
-        "points": sk.Points(
-            name="Points",
-            description="Points prompt.",
-            required=False,
-        ),
+        "image": sk.Image(description="Input image (2D, RGB).", rgb=True),
+        "boxes": sk.Boxes(name="Boxes", description="Boxes prompt."),
+        "points": sk.Points(name="Points", description="Points prompt."),
         "auto_mode": sk.Bool(
             name="Auto mode",
             description="Run SAM in auto (grid) mode",
@@ -47,12 +38,8 @@ generator = SAM2AutomaticMaskGenerator.from_pretrained(
     ],
 )
 def sam2_algo(image, boxes, points, auto_mode):
-    if len(image.shape) == 2:
-        image = rescale_intensity(image, out_range=(0, 255)).astype(np.uint8)
-        image = gray2rgb(image)
-
     image = rescale_intensity(image, out_range=(0, 1)).astype(np.float32)
-    
+
     rx, ry, _ = image.shape
     mask = np.zeros((rx, ry), dtype=np.uint16)
 
