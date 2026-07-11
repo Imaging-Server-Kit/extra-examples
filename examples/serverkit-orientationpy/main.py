@@ -53,6 +53,7 @@ import imaging_server_kit as sk
     description="Measure greyscale orientations from 2D and 3D images.",
     project_url="https://gitlab.com/epfl-center-for-imaging/orientationpy",
     tags=["Filtering", "EPFL"],
+    tileable=True,
 )
 def orientationpy_algo(
     image: np.ndarray,

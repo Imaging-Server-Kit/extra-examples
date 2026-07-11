@@ -31,7 +31,6 @@ class VideoCamera:
         "webcam_idx": sk.Integer(name="Webcam index", min=0),
         "filter": sk.Choice(name="Filter", items=["sobel", "threshold", "none"], default="none")
     },
-    tileable=False,
 )
 def stream_webcam(webcam_idx, filter):
     camera = VideoCamera(webcam_idx)

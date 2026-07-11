@@ -1,6 +1,7 @@
 from pathlib import Path
 import numpy as np
 from cellpose import models
+from skimage.exposure import rescale_intensity
 import imaging_server_kit as sk
 
 @sk.algorithm(
@@ -70,6 +71,8 @@ def cellpose_algo(
     if diameter == 0:
         diameter = None
 
+    image = rescale_intensity(image, out_range=(0, 1))
+    
     segmentation, flows, styles = model.eval(
         image,
         diameter=diameter,
