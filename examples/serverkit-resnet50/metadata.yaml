@@ -1,6 +1,0 @@
-name: "ResNet50"
-description: "Image classification with a ResNet50 pretrained model."
-project_url: "https://huggingface.co/microsoft/resnet-50"
-tags:
-  - "Classification"
-  - "Huggingface"

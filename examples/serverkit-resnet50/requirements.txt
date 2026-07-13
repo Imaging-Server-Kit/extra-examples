@@ -1,3 +1,0 @@
-imaging-server-kit
-torch
-transformers

@@ -1,6 +1,0 @@
-name: "Image Captioning (BLIP)"
-description: "Automatic image captioning using BLIP."
-project_url: "https://huggingface.co/Salesforce/blip-image-captioning-base"
-tags:
-  - "Huggingface"
-  - "Captioning"
