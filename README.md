@@ -1,4 +1,3 @@
-![EPFL Center for Imaging logo](https://imaging.epfl.ch/resources/logo-for-gitlab.svg)
 # 🪐 Examples
 
 This repository contains a gallery of example Imaging Server Kit algorithms implemented for a selection of open-source projects.
