@@ -78,7 +78,7 @@ def sam2_algo(image, boxes, points, auto_mode):
         for k, m in enumerate(masks):
             mask[np.squeeze(m) == 1] = k + 1
 
-    return sk.Mask(mask, name="SAM-2 result", merger="instances")
+    return sk.Mask(mask, name="SAM-2 result")
 
 
 if __name__ == "__main__":

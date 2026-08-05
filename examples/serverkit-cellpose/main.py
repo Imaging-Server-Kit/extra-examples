@@ -79,9 +79,8 @@ def cellpose_algo(
         flow_threshold=flow_threshold,
         cellprob_threshold=cellprob_threshold,
         channels=[0, 0],  # Grayscale image only (for now)
-        # do_3D=True,
     )
-    return sk.Mask(segmentation, name="CellPose result (instances)", merger="instances")
+    return sk.Mask(segmentation, name="CellPose result (instances)")
 
 
 if __name__ == "__main__":

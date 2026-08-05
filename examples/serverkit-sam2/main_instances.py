@@ -80,7 +80,7 @@ def sam2_algo(image, boxes, points, auto_mode):
                     first_mask = masks[0]
                     mask[np.squeeze(first_mask) == 1] = point_idx + 1
 
-    return sk.Mask(mask, name="SAM-2 result", merger="instances")
+    return sk.Mask(mask, name="SAM-2 result")
 
 
 if __name__ == "__main__":

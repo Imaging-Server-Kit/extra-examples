@@ -40,13 +40,13 @@ def stream_webcam(webcam_idx, filter):
         if filter == "sobel":
             frame = frame[..., 1]
             frame = sobel(frame)
-            yield sk.Image(frame, name="Webcam stream (filtered)", merger="override")
+            yield sk.Image(frame, name="Webcam stream (filtered)")
         elif filter == "threshold":
             frame = frame[..., 1]
             binary = frame > threshold_otsu(frame)
-            yield sk.Image(frame, name="Webcam stream (gray)", merger="override"), sk.Mask(binary, name="Webcam stream (segmented)")
+            yield sk.Image(frame, name="Webcam stream (gray)"), sk.Mask(binary, name="Webcam stream (segmented)")
         else:
-            yield sk.Image(frame, name="Webcam stream", merger="override", rgb=True)
+            yield sk.Image(frame, name="Webcam stream", rgb=True)
         
 
 if __name__ == "__main__":

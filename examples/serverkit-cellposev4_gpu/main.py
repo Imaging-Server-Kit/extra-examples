@@ -3,6 +3,7 @@ import os
 
 import numpy as np
 from cellpose import models
+from skimage.segmentation import clear_border
 
 import imaging_server_kit as sk
 
@@ -63,6 +64,7 @@ cached_custom_model = None
     ],
     project_url="https://github.com/MouseLand/cellpose",
     samples=[{"image": str(Path(__file__).parent / "sample_images" / "nuclei_2d.tif")}],
+    tileable=True,
 )
 def cellpose_server(
     image: np.ndarray,
@@ -102,8 +104,10 @@ def cellpose_server(
         flow_threshold=flow_threshold,
         cellprob_threshold=cellprob_threshold,
     )
+    
+    segmentation = clear_border(segmentation)
 
-    return sk.Mask(segmentation, name="Cellpose result", merger="instances")
+    return sk.Mask(segmentation, name="Cellpose result")
 
 
 if __name__ == "__main__":

@@ -94,7 +94,7 @@ def stardist_algo(
             return_labels=True,
         )
 
-    return sk.Mask(segmentation, name=f"{model_name} result", merger="instances")
+    return sk.Mask(segmentation, name=f"{model_name} result")
 
 
 if __name__ == "__main__":
