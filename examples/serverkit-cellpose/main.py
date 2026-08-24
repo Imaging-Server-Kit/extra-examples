@@ -80,7 +80,7 @@ def cellpose_algo(
         cellprob_threshold=cellprob_threshold,
         channels=[0, 0],  # Grayscale image only (for now)
     )
-    return sk.Mask(segmentation, name="CellPose result (instances)")
+    return sk.Mask(segmentation, name="CellPose result (instances)", merger="instances")
 
 
 if __name__ == "__main__":
