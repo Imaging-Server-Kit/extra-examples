@@ -53,6 +53,11 @@ cached_custom_model = None
             max=1.0,
             step=0.01,
         ),
+        "do_clear_border": sk.Float(
+            default=False,
+            name="Clear border",
+            description="Whether to clear objects touching the image border.",
+        ),
     },
     description="A generalist algorithm for cellular segmentation.",
     tags=[
@@ -71,6 +76,7 @@ def cellpose_server(
     model_name: str,
     flow_threshold: float,
     cellprob_threshold: float,
+    do_clear_border: bool,
 ):
     """Runs the algorithm."""
     global last_model, cached_model, last_custom_path, cached_custom_model
@@ -105,9 +111,10 @@ def cellpose_server(
         cellprob_threshold=cellprob_threshold,
     )
     
-    segmentation = clear_border(segmentation)
-
-    return sk.Mask(segmentation, name="Cellpose result")
+    if do_clear_border:
+        segmentation = clear_border(segmentation)
+    
+    return sk.Mask(segmentation, name="Cellpose result", merger="instances")
 
 
 if __name__ == "__main__":
